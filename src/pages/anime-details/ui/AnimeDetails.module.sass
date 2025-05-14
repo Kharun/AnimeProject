@@ -1,0 +1,275 @@
+.content
+    color: #fff
+    padding: 200px 10vh
+
+.image
+    width: 100%
+    height: 100%
+    max-width: 450px
+    max-height: 640px
+    object-fit: cover
+    border-radius: 10px
+
+.title_top
+    font-size: 26px
+    font-weight: 600
+    padding-bottom: 40px
+    margin-bottom: 40px
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4)
+
+.info
+    display: flex
+    gap: 30px
+    &_right
+        width: 100%
+        max-width: 370px
+
+.details
+    &_title
+        font-size: 36px
+        padding-bottom: 10px
+    &_title_en
+        font-style: italic
+        color: #b1b1b1
+
+.details_genres
+    padding-top: 30px
+    display: flex
+    gap: 10px
+    flex-wrap: wrap
+    &_item
+        padding: 5px
+        border-radius: 10px
+        background-color: #ffffff60
+        user-select: none
+
+.items
+    display: flex
+    flex-direction: column
+    gap: 20px
+    padding-top: 30px
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4)
+    padding-bottom: 30px
+
+.item
+    display: flex
+    width: 100%
+    gap: 10px
+    &_title
+        width: 150px
+
+.voice_items
+    display: flex
+    gap: 8px
+
+.desc
+    padding-top: 30px
+    &_title
+        padding-bottom: 20px
+
+.bg
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 60vh
+    overflow: hidden
+    z-index: -1
+    img
+        width: 100%
+        height: 100%
+        object-fit: cover
+    &::after
+        content: ''
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background: linear-gradient(to top, rgba(0, 0, 0, 1), transparent)
+
+.player
+    margin-top: 50px
+    display: flex
+    gap: 20px
+    height: 500px
+
+.video
+    width: 60%
+    border-radius: 20px
+    overflow: hidden
+    border: 1px solid rgba(255, 255, 255, 0.4)
+
+.episodes
+    border-radius: 20px
+    padding: 20px
+    width: 40%
+    border: 1px solid rgba(255, 255, 255, 0.4)
+    display: flex
+    flex-direction: column
+    gap: 10px
+    overflow-y: auto
+    scrollbar-width: thin 
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent 
+    
+    &::-webkit-scrollbar
+        width: 8px
+    
+    &::-webkit-scrollbar-track
+        background: transparent
+        border-radius: 10px
+        margin: 5px 0
+    
+    &::-webkit-scrollbar-thumb
+        background-color: rgba(255, 255, 255, 0.3)
+        border-radius: 10px
+        border: 2px solid transparent
+        background-clip: content-box
+    
+    &::-webkit-scrollbar-thumb:hover
+        background-color: rgba(255, 255, 255, 0.5)
+    p
+        cursor: pointer
+        padding: 10px
+        border-radius: 10px
+        transition: .1s linear
+        &:hover
+            background: #fff
+            color: #000
+        &.active
+            background: #fff
+            color: #000
+
+.others
+    margin-top: 70px
+    border-top: 1px solid rgba(255, 255, 255, 0.4)
+    &_title
+        padding: 40px 0
+    &_items
+        display: flex
+        gap: 30px
+    &_item
+        display: flex
+        flex-direction: column
+        align-items: start
+        gap: 20px
+        width: 100%
+        height: 450px
+        position: relative
+        cursor: pointer
+        &::after
+            position: absolute
+            content: ""
+            background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))
+            bottom: 0
+            left: 0
+            width: 100%
+            height: 30%
+            opacity: 0
+            transition: .2s ease-in-out
+        p
+            position: absolute
+            padding: 10px
+            bottom: 0
+            width: 100%
+            z-index: 1
+            opacity: 0
+            transition: .2s ease-in-out
+        img
+            width: 100%
+            height: 450px
+            border-radius: 10px
+            object-fit: cover
+        &:hover
+            &::after
+                opacity: 1
+            p
+                opacity: 1
+        &.active
+            border-bottom: 1px solid #fff
+
+// Skeleton styles
+.skeletonTitle
+    margin-bottom: 40px
+    background: #f0f0f038 !important
+    border-radius: 4px
+
+.skeletonPoster
+    background: #f0f0f038 !important
+    border-radius: 10px
+
+.skeletonGenre
+    background: #f0f0f038 !important
+    border-radius: 10px
+    margin-right: 10px
+    margin-bottom: 10px
+
+.skeletonPlayer
+    background: #f0f0f038 !important
+    border-radius: 20px
+
+.skeletonEpisode
+    background: #f0f0f038 !important
+    border-radius: 10px
+    margin-bottom: 10px
+
+:global
+  .MuiSkeleton-root
+    background: #f0f0f038 !important
+
+
+@media screen and (max-width: 920px)
+    .info
+        flex-direction: column
+    .content
+        padding: 100px 5vh
+
+@media screen and (max-width: 620px)
+    .image
+        max-width: unset
+    .title_top
+        font-size: 18px
+        padding-bottom: 20px
+        margin-bottom: 20px
+    .details_title
+        font-size: 20px
+    .items
+        gap: 10px
+    .item_title
+        font-size: 14px
+    .item_text
+        font-size: 14px
+    .details_genres_item
+        font-size: 14px
+    .details_genres
+        overflow-x: auto
+        flex-wrap: nowrap
+        padding-bottom: 5px
+        scrollbar-width: none
+    .desc
+        p
+            font-size: 14px
+        &_title
+            font-size: 20px
+    .player
+        flex-direction: column
+    .video
+        width: 100%
+        height: 100%
+    .episodes
+        width: 100%
+        height: 325px
+        p
+            font-size: 14px
+    .voice_items
+        flex-wrap: wrap
+        max-width: 50%
+
+    .skeletonPoster
+        width: 100% !important
+    .skeletonPlayer
+        width: 100% !important
+
+@media screen and (max-width: 480px)
+    .content
+        padding: 80px 2vh

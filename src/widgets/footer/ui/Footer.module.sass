@@ -1,0 +1,61 @@
+.footer
+    padding: 80px 10vh
+    border-top: 1px solid rgba(255, 255, 255, 0.4)
+    color: #fff
+    display: flex
+    justify-content: space-between
+    align-items: center
+    &_logo
+        cursor: pointer
+    &_nav
+        display: flex
+        gap: 20px
+        &_item
+            cursor: pointer
+            transition: .1s linear
+            position: relative
+            &::after
+                position: absolute
+                content: ""
+                width: 0
+                height: 1px
+                background: #fff
+                left: 0
+                bottom: 0
+                transition: .3s ease
+            &:hover::after
+                width: 100%
+    &_right
+        display: flex
+        flex-direction: column
+        gap: 20px
+        max-width: 350px
+    &_text
+        padding: 10px
+        border: 1px solid #fff
+        border-radius: 10px
+        cursor: default
+        user-select: none
+        span
+            text-decoration: underline
+    &_social
+        display: flex
+        gap: 10px
+        &_item
+            width: 40px
+            height: 40px
+            cursor: pointer
+            color: #fff
+            transition: .1s linear
+            &:hover
+                color: rgba(255, 255, 255, 0.6)
+
+@media screen and (max-width: 920px)
+    .footer
+        flex-direction: column
+        gap: 20px
+
+@media screen and (max-width: 620px)
+    .footer
+        padding: 60px 3vh
+        padding-bottom: 90px

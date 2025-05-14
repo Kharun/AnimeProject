@@ -1,0 +1,234 @@
+.nav
+    position: absolute
+    top: 0
+    padding: 0 10vh
+    padding-top: 30px
+    display: flex
+    justify-content: space-between
+    z-index: 1
+    width: 100%
+    align-items: center
+
+    &_links
+        display: flex
+        gap: 10px
+
+    &_link
+        text-decoration: none
+        font-size: 16px
+        font-weight: 600
+        color: #ddd
+        border-radius: 50px
+        padding: 8px 17px
+        transition: .1s linear
+        &.active 
+            color: #000
+            background-color: #fff
+        &.active:hover
+            background-color: #fff
+        &:hover
+            background-color: #ffffff30
+            
+.search
+    display: flex
+    justify-content: center
+    align-items: center
+    background: #fff
+    color: #242424
+    border-radius: 50px
+    padding: 7px
+    cursor: pointer
+    transition: .1s linear
+    &:hover
+        background-color: #d3d3d3
+        filter: brightness(97%)
+
+.overlay
+    position: fixed
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+    z-index: 2
+    background: rgba(0, 0, 0, 0.7)
+    transition: .1s ease-in-out
+    visibility: hidden
+    opacity: 0
+    &.active
+        visibility: visible
+        opacity: 1
+
+.loading
+    display: flex
+    justify-content: center
+    align-items: center
+    padding-top: 70px
+
+.modal
+    background: #fff
+    z-index: 3
+    position: fixed
+    top: 100px
+    right: 10vh
+    border-radius: 10px
+    width: 500px
+    height: 70vh
+    transition: .1s ease-in-out
+    visibility: hidden
+    opacity: 0
+    overflow-y: auto
+    &::-webkit-scrollbar
+        width: 8px
+    &::-webkit-scrollbar-track
+        background: #f0f0f0
+        border-radius: 10px
+    &::-webkit-scrollbar-thumb
+        background: linear-gradient(180deg, #ccc, #999)
+        border-radius: 10px
+    &::-webkit-scrollbar-thumb:hover
+        background: linear-gradient(180deg, #bbb, #888)
+    &.active
+        opacity: 1
+        visibility: visible
+    label
+        display: flex
+        padding-bottom: 5px
+        border-bottom: 1px solid gray
+        position: sticky
+        width: 100%
+        left: 0
+        top: 0
+        padding: 20px 20px 10px 20px
+        background: #fff
+        input
+            border: none
+            outline: none
+            padding-left: 10px
+            width: 100%
+        
+.items
+    display: flex
+    flex-direction: column
+    gap: 15px
+    padding: 30px
+    height: 100%
+    align-items: start
+
+.item
+    padding: 8px
+    border-radius: 8px
+    border: 1px solid #000
+    display: flex
+    align-items: center
+    gap: 10px
+    cursor: pointer
+    transition: .1s ease-in-out
+    width: 100%
+    img
+        width: 56px
+        border-radius: 6px
+        object-fit: cover
+
+.item_info
+    display: flex
+    flex-direction: column
+    gap: 4px
+
+.item_status
+    font-size: 12px
+.item_title
+    font-size: 14px
+    font-weight: 600
+.item_genres
+    padding-top: 5px
+    display: -webkit-box
+    -webkit-box-orient: vertical
+    -webkit-line-clamp: 1
+    overflow: hidden
+    text-overflow: ellipsis
+    font-size: 12px
+
+.laodmore
+    display: flex
+    justify-content: center
+    align-items: center
+    padding-top: 10px
+    width: 100%
+
+.show_more
+    font-size: 12px
+    cursor: pointer
+    padding: 5px
+    border: 1px solid #000
+    border-radius: 6px
+    transition: .1s linear
+    &:hover
+        background: #000
+        color: #fff
+
+.nav_mobile_search
+    display: none
+.bottom_bar
+    display: none
+
+@media screen and (max-width: 920px)
+    .nav
+        padding: 0 5vh
+        padding-top: 30px
+
+@media screen and (max-width: 620px)
+    .nav
+        display: none
+
+    .nav_mobile_search
+        display: flex
+        background: rgba(20, 20, 20, 0.95)
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 2
+        width: 100%
+        backdrop-filter: blur(6px)
+        background: linear-gradient(to bottom, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.7) 50%, rgba(20, 20, 20, 0) 100%)
+        label
+            width: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            padding: 10px
+            gap: 5px
+            color: #fff
+
+            input
+                width: 100%
+                border: none
+                outline: none
+                background: none
+                color: #fff
+
+    .modal
+        left: 50%
+        transform: translateX(-50%)
+        max-width: 90vw
+    .bottom_bar
+        position: fixed
+        bottom: 0
+        width: 100%
+        padding: 20px
+        z-index: 99
+        left: 0
+        display: flex
+        gap: 20px
+        justify-content: center
+        background: linear-gradient(to top, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.7) 50%, rgba(20, 20, 20, 0) 100%)
+        backdrop-filter: blur(6px)
+        &_item
+            display: flex
+            align-items: center
+            justify-content: center
+            color: #fff
+            width: 35px
+            height: 35px
+            &.active
+                padding-bottom: 5px
+                border-bottom: 1px solid #fff
