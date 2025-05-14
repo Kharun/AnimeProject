@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# 🎬 AniLibria - Аниме хостинг на React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-4.0-orange?logo=vite)](https://vitejs.dev/)
+[![Anilibria API](https://img.shields.io/badge/API-Anilibria-green)](https://anilibria.tv/)
 
-Currently, two official plugins are available:
+Проект предоставляет удобный интерфейс для просмотра аниме через Anilibria API с поддержкой десктопных и мобильных устройств.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Скриншот главной страницы](screenshot.jpg) <!-- Замените на реальный скриншот -->
 
-## Expanding the ESLint configuration
+## ✨ Особенности
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- 🎥 Просмотр аниме онлайн с Anilibria API
+- 🔍 Быстрый поиск по всей базе аниме
+- 📱 Адаптивный дизайн (десктоп + мобильные устройства)
+- ⚡ Мгновенная загрузка благодаря Vite
+- 🎨 Удобный интерфейс на React 18
+- 🛠 Типобезопасность с TypeScript
+- FSD-архитектура
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Быстрый старт
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/ваш-username/anilibria-client.git
+   cd anilibria-client
+   ```
+2. Установите зависимости:
+   ```bash
+   yarn install
+   ```
+3. Запустите проект:
+   ```bash
+   yarn dev
+   ```
+4. Откройте в браузере:
+   ```bash
+   http://localhost:5173
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠 Технологии
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- Frontend:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- React 18 (Hooks, Router 6)
+
+- TypeScript 5
+
+- Vite 4
+
+- SCSS для стилей
+
+- API:
+
+- Anilibria API
+
+- Дополнительно:
+
+- Axios для запросов
+
+- React Player для воспроизведения видео
+
+- Дебаунс для поиска
+
+## FSD Structure
+
+src/
+├── app/ # Инициализация приложения
+├── processes/ # (Опционально) Процессы
+├── pages/ # Страницы
+├── widgets/ # Независимые виджеты
+├── features/ # Фичи (поиск, плеер)
+├── entities/ # Бизнес-сущности (аниме, юзер)
+├── shared/ # Общие компоненты/утилиты
+└── index.tsx # Entry point
