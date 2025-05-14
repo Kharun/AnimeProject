@@ -1,4 +1,4 @@
-# 🎬 AniLibria - Аниме хостинг на React
+# 🎬 Аниме хостинг
 
 [![React](https://img.shields.io/badge/React-18.2-blue?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
@@ -7,7 +7,7 @@
 
 Проект предоставляет удобный интерфейс для просмотра аниме через Anilibria API с поддержкой десктопных и мобильных устройств.
 
-![Скриншот главной страницы](screenshot.jpg) <!-- Замените на реальный скриншот -->
+<!-- ![Скриншот главной страницы](screenshot.jpg) -->
 
 ## ✨ Особенности
 
@@ -63,14 +63,16 @@
 
 - Дебаунс для поиска
 
-## FSD Structure
+## 🏗️ Project Structure (FSD)
 
+```
 src/
-├── app/ # Инициализация приложения
-├── processes/ # (Опционально) Процессы
-├── pages/ # Страницы
-├── widgets/ # Независимые виджеты
-├── features/ # Фичи (поиск, плеер)
-├── entities/ # Бизнес-сущности (аниме, юзер)
-├── shared/ # Общие компоненты/утилиты
-└── index.tsx # Entry point
+├── app/               # App initialization, routing, providers
+├── processes/         # (Optional) Complex multi-page processes
+├── pages/             # Page components
+├── widgets/           # Self-contained widgets (header/footer)
+├── features/          # Feature modules (search, player, auth)
+├── entities/          # Business entities (anime, user, review)
+├── shared/            # Shared UI & utilities
+└── index.tsx          # Entry point
+```
