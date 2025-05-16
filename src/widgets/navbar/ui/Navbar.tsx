@@ -136,7 +136,7 @@ export const Navbar = () => {
     <>
       <div className={styles.nav}>
         <div className={styles.nav_links}>
-          <a href="/home-page" className={`${styles.nav_link} ${styles.active}`}>
+          <a href="" onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
             Главная
           </a>
           <a href="" className={styles.nav_link} onClick={() => navigate("schedule-page")}>
