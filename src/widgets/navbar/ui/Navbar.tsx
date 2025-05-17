@@ -136,15 +136,15 @@ export const Navbar = () => {
     <>
       <div className={styles.nav}>
         <div className={styles.nav_links}>
-          <a href="" onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
+          <p onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
             Главная
-          </a>
-          <a href="" className={styles.nav_link} onClick={() => navigate("schedule-page")}>
+          </p>
+          <p className={styles.nav_link} onClick={() => navigate("schedule-page")}>
             Расписание
-          </a>
-          <a href="" className={styles.nav_link} onClick={getRandom}>
+          </p>
+          <p className={styles.nav_link} onClick={getRandom}>
             Случайное
-          </a>
+          </p>
         </div>
         <div className={styles.nav_search}>
           <div className={styles.search} onClick={() => setShow((prev) => !prev)}>
