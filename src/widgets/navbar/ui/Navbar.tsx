@@ -139,7 +139,7 @@ export const Navbar = () => {
           <p onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
             Главная
           </p>
-          <p className={styles.nav_link} onClick={() => navigate("schedule-page")}>
+          <p className={styles.nav_link} onClick={() => navigate("schedule-pages")}>
             Расписание
           </p>
           <p className={styles.nav_link} onClick={getRandom}>

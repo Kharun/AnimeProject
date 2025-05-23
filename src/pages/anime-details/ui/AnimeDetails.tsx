@@ -156,10 +156,12 @@ export const AnimeDetails = () => {
     });
   }, [data.franchises]);
 
+  console.log(ep);
+
   return (
     <div className={styles.content}>
       <div className={styles.bg}>
-        <img src="/details_bg_2.jpg" alt="" />
+        <img src="/bg.jpg" alt="" />
       </div>
 
       {data.statuses.laoding ? (

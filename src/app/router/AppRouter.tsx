@@ -1,6 +1,7 @@
 import { AnimeDetails } from "@/pages/anime-details";
 import { HomePage } from "@/pages/home";
 import { NotFound } from "@/pages/not-found";
+import { Schedule } from "@/pages/schedule";
 import { Layout } from "@/widgets/layout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "anime-details/:id",
         element: <AnimeDetails />,
+      },
+      {
+        path: "schedule-page",
+        element: <Schedule />,
       },
     ],
   },
