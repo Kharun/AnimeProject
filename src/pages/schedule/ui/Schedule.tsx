@@ -26,8 +26,6 @@ export const Schedule = () => {
     return days[idx];
   };
 
-  console.log(data);
-
   return (
     <>
       <div className={styles.content}>

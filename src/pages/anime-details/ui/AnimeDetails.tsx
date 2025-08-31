@@ -9,79 +9,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import { Navigation } from "swiper/modules";
+import { TitleDetailT } from "@/shared/types";
+import { Episode, FracnhisesT } from "@/shared/types/TitleT";
+import { ArrowLeftIcon } from "@/shared/ui/icons";
 
 export const AnimeDetails = () => {
   const { id } = useParams();
-  const [data, setData] = useState({
-    posters: {
-      original: {
-        url: "",
-      },
-    },
-    names: {
-      alternative: "",
-      en: "",
-      ru: "",
-    },
-    genres: [],
-    season: {
-      string: "",
-      year: 0,
-    },
-    status: {
-      string: "",
-    },
-    type: {
-      episodes: 0,
-      full_string: "",
-      string: "",
-    },
-    team: {
-      voice: [],
-      timing: [],
-      translator: [],
-    },
-    description: "",
-    player: {
-      list: [
-        {
-          episode: 0,
-          name: "",
-          preview: "",
-          hls: {
-            fhd: "",
-            hd: "",
-            sd: "",
-          },
-        },
-      ],
-    },
-    statuses: {
-      laoding: false,
-    },
-    franchises: [
-      {
-        releases: [
-          {
-            id: 0,
-            names: {
-              ru: "",
-            },
-          },
-        ],
-      },
-    ],
+  const [data, setData] = useState<TitleDetailT>({
+    data: null,
+    status: { loading: false },
   });
   const [ep, setEp] = useState({
     episode: "",
     preview: "",
   });
-  const [image, setImage] = useState([
-    {
-      id: 0,
-      url: "",
-    },
-  ]);
+  const [franchises, setFranchises] = useState<FracnhisesT[]>([]);
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const navigate = useNavigate();
 
@@ -89,74 +31,57 @@ export const AnimeDetails = () => {
     try {
       setData((prev) => ({
         ...prev,
-        statuses: {
-          laoding: true,
+        status: {
+          loading: true,
         },
       }));
       const resp = await AnilibriaApi.getTitle(id);
-      if (resp.data) setData(resp.data);
+      if (resp.data) {
+        setData((prev) => ({
+          ...prev,
+          data: resp.data,
+        }));
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setData((prev) => ({
         ...prev,
-        statuses: {
-          laoding: false,
+        status: {
+          loading: false,
         },
       }));
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [id]);
-
-  const handleEpisode = (ep: string, preview: string, idx: number) => {
-    setActiveIndex(idx);
-    return setEp({
-      episode: `https://cache.libria.fun${ep}`,
-      preview: `https://www.anilibria.tv${preview}`,
-    });
-  };
-
-  const getImage = async (id: number) => {
+  const fetchFracnchises = async () => {
     try {
-      const resp = await AnilibriaApi.getTitle(id);
-      const url = resp.data.posters.original.url;
-
-      setImage((prev) => {
-        const updatedImages = [...prev];
-
-        const existingImage = updatedImages.find((img) => img.id === id);
-        if (existingImage) {
-          existingImage.url = url;
-        } else {
-          updatedImages.push({ id, url });
-        }
-
-        return updatedImages;
-      });
+      const resp = await AnilibriaApi.getFranchises(id);
+      setFranchises(resp.data);
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
-    setEp({
-      episode: `https://cache.libria.fun${data.player.list[1]?.hls.fhd}`,
-      preview: `https://www.anilibria.tv${data.player.list[1]?.preview}`,
+    fetchData();
+    fetchFracnchises();
+  }, [id]);
+
+  const handleEpisode = (ep: string, preview: string, idx: number) => {
+    setActiveIndex(idx);
+    return setEp({
+      episode: `${ep}`,
+      preview: `https://www.anilibria.tv${preview}`,
     });
-  }, [data.player.list]);
+  };
 
   useEffect(() => {
-    data.franchises.forEach((f: any) => {
-      f.releases.forEach((e: any) => {
-        getImage(e.id);
-      });
+    setEp({
+      episode: `${data.data?.episodes[0]?.hls_1080 || data.data?.episodes[0]?.hls_720}`,
+      preview: `https://www.anilibria.tv${data.data?.episodes[0]?.preview.optimized.src}`,
     });
-  }, [data.franchises]);
-
-  console.log(ep);
+  }, [data.data?.episodes]);
 
   return (
     <div className={styles.content}>
@@ -164,7 +89,7 @@ export const AnimeDetails = () => {
         <img src="/bg.jpg" alt="" />
       </div>
 
-      {data.statuses.laoding ? (
+      {data.status?.loading ? (
         <>
           <Skeleton variant="text" width="60%" height={40} className={styles.skeletonTitle} />
 
@@ -211,18 +136,18 @@ export const AnimeDetails = () => {
         </>
       ) : (
         <>
-          <div className={styles.title_top}>{data.names.ru}</div>
+          <div className={styles.title_top}>{data.data?.name.main}</div>
 
           <div className={styles.info}>
-            <img className={styles.image} src={`https://www.anilibria.tv${data.posters.original.url}`} alt="" />
+            <img className={styles.image} src={`https://www.anilibria.tv${data.data?.poster.optimized.src}`} alt="" />
             <div className={styles.details}>
-              <h2 className={styles.details_title}>{data.names.ru}</h2>
-              <p className={styles.details_title_en}>{data.names.en}</p>
+              <h2 className={styles.details_title}>{data.data?.name.main}</h2>
+              <p className={styles.details_title_en}>{data.data?.name.english}</p>
 
               <div className={styles.details_genres}>
-                {data.genres.map((e, idx) => (
+                {data.data?.genres.map((e, idx) => (
                   <div key={idx} className={styles.details_genres_item}>
-                    {e}
+                    {e.name}
                   </div>
                 ))}
               </div>
@@ -231,52 +156,52 @@ export const AnimeDetails = () => {
                 <div className={styles.item}>
                   <div className={styles.item_title}>Сезон года:</div>
                   <div className={styles.item_text}>
-                    {data.season.string} {data.season.year}
+                    {data.data?.season.description} {data.data?.year}
                   </div>
                 </div>
                 <div className={styles.item}>
                   <div className={styles.item_title}>Статус:</div>
-                  <div className={styles.item_text}>{data.status.string}</div>
+                  {/* <div className={styles.item_text}>{data.data.status.string}</div> */}
                 </div>
                 <div className={styles.item}>
                   <div className={styles.item_title}>Тип:</div>
-                  <div className={styles.item_text}>{data.type.full_string}</div>
+                  <div className={styles.item_text}>{data.data?.type.value}</div>
                 </div>
                 <div className={styles.item}>
                   <div className={styles.item_title}>Озвучка:</div>
-                  <div className={styles.voice_items}>
+                  {/* <div className={styles.voice_items}>
                     {data.team.voice.map((e: any, idx) => (
                       <div key={idx} className={styles.item_text}>
                         {e}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
                 <div className={styles.item}>
                   <div className={styles.item_title}>Тайминг:</div>
-                  <div className={styles.voice_items}>
+                  {/* <div className={styles.voice_items}>
                     {data.team.timing.map((e: any, idx) => (
                       <div key={idx} className={styles.item_text}>
                         {e}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
                 <div className={styles.item}>
                   <div className={styles.item_title}>Субтитры:</div>
-                  <div className={styles.voice_items}>
+                  {/* <div className={styles.voice_items}>
                     {data.team.translator.map((e: any, idx) => (
                       <div key={idx} className={styles.item_text}>
                         {e}
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
               <div className={styles.desc}>
                 <h2 className={styles.desc_title}>Описание:</h2>
-                <p>{data.description}</p>
+                <p>{data.data?.description}</p>
               </div>
             </div>
           </div>
@@ -294,19 +219,19 @@ export const AnimeDetails = () => {
               />
             </div>
             <div className={styles.episodes}>
-              {Object.values(data.player.list).map((ep: any, idx) => (
+              {data.data?.episodes.map((ep: Episode, idx) => (
                 <p
                   key={idx}
-                  onClick={() => handleEpisode(ep.hls.fhd, ep.preview, idx)}
+                  onClick={() => handleEpisode(ep.hls_1080 || ep.hls_720, ep.preview.optimized.src, idx)}
                   className={activeIndex === idx ? styles.active : ""}
                 >
-                  Эпизод {ep.episode} {ep.name}
+                  Эпизод {ep.ordinal} {ep.name}
                 </p>
               ))}
             </div>
           </div>
 
-          {data.franchises.length > 0 ? (
+          {franchises?.length > 0 ? (
             <div className={styles.others}>
               <h2 className={styles.others_title}>Порядок просмотра</h2>
               <Swiper
@@ -315,6 +240,10 @@ export const AnimeDetails = () => {
                 slidesPerView={5}
                 modules={[Navigation]}
                 className={styles.others_items}
+                navigation={{
+                  nextEl: ".custom-next",
+                  prevEl: ".custom-prev",
+                }}
                 breakpoints={{
                   320: {
                     slidesPerView: 1.1,
@@ -334,21 +263,26 @@ export const AnimeDetails = () => {
                   },
                 }}
               >
-                {data.franchises.map((e: any) =>
-                  e.releases.map((e: any) => {
-                    const imageObj = image.find((img) => img.id === e.id);
+                {franchises?.map((e) =>
+                  e.franchise_releases.map((e) => {
                     return (
                       <SwiperSlide
                         className={`${styles.others_item} ${id === e.id.toString() ? styles.active : ""}`}
                         key={e.id}
-                        onClick={() => navigate(`/anime-details/${e.id}`)}
+                        onClick={() => navigate(`/anime-details/${e.release_id}`)}
                       >
-                        <img src={`https://www.anilibria.tv${imageObj?.url}` || ""} alt="" />
-                        <p>{e.names.ru}</p>
+                        <img src={`https://www.anilibria.tv${e.release.poster.optimized.src}` || ""} alt="" />
+                        <p>{e.release.name.main}</p>
                       </SwiperSlide>
                     );
                   })
                 )}
+                <div className={`${styles.swiper_prev} custom-prev`}>
+                  <ArrowLeftIcon />
+                </div>
+                <div className={`${styles.swiper_next} custom-next`}>
+                  <ArrowLeftIcon />
+                </div>
               </Swiper>
             </div>
           ) : (

@@ -10,28 +10,14 @@ import "swiper/css/scrollbar";
 import { Navigation } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@mui/material";
+import { TitleT } from "@/shared/types";
+import { TitleItem } from "@/shared/types/TitleT";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState({
-    list: [
-      {
-        id: 0,
-        names: {
-          en: "",
-          ru: "",
-        },
-        posters: {
-          original: {
-            url: "",
-          },
-        },
-        description: "",
-      },
-    ],
-    status: {
-      loading: false,
-    },
+  const [title, setTitle] = useState<TitleT>({
+    data: [],
+    status: { loading: false },
   });
 
   const fetchTitleList = async () => {
@@ -42,7 +28,7 @@ export const HomePage = () => {
           loading: true,
         },
       }));
-      const response = await AnilibriaApi.getUpdates(1);
+      const response = await AnilibriaApi.getCatalog();
       setTitle(response.data);
     } catch (error) {
       console.error("Ошибка", error);
@@ -83,7 +69,7 @@ export const HomePage = () => {
         </div>
       </div>
 
-      {title.status.loading ? (
+      {title.status?.loading ? (
         <Swiper
           freeMode
           className={styles.skeletons}
@@ -113,21 +99,11 @@ export const HomePage = () => {
             },
           }}
         >
-          <SwiperSlide className={styles.swiper_slide}>
-            <Skeleton className={styles.skeletons_updates} animation="wave" />
-          </SwiperSlide>
-          <SwiperSlide className={styles.swiper_slide}>
-            <Skeleton className={styles.skeletons_updates} animation="wave" />
-          </SwiperSlide>
-          <SwiperSlide className={styles.swiper_slide}>
-            <Skeleton className={styles.skeletons_updates} animation="wave" />
-          </SwiperSlide>
-          <SwiperSlide className={styles.swiper_slide}>
-            <Skeleton className={styles.skeletons_updates} animation="wave" />
-          </SwiperSlide>
-          <SwiperSlide className={styles.swiper_slide}>
-            <Skeleton className={styles.skeletons_updates} animation="wave" />
-          </SwiperSlide>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <SwiperSlide key={i} className={styles.swiper_slide}>
+              <Skeleton className={styles.skeletons_updates} animation="wave" />
+            </SwiperSlide>
+          ))}
         </Swiper>
       ) : (
         <div className={styles.content}>
@@ -161,11 +137,11 @@ export const HomePage = () => {
               },
             }}
           >
-            {title.list.map((e: any) => (
+            {title.data.map((e: TitleItem) => (
               <SwiperSlide className={styles.swiper_slide}>
                 <Card
-                  title={e.names.ru}
-                  img={e.posters.original.url}
+                  title={e.name.main}
+                  img={e.poster.optimized.src}
                   desc={e.description}
                   onClick={() => navigate(`/anime-details/${e.id}`)}
                 />

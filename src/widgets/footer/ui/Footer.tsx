@@ -14,7 +14,7 @@ export const Footer = () => {
     try {
       const resp = await AnilibriaApi.getRandom();
       if (resp.data) {
-        navigate(`/anime-details/${resp.data.id}`);
+        navigate(`/anime-details/${resp.data[0].id}`);
       }
     } catch (err) {
       console.error(err);

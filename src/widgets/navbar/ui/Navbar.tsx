@@ -5,51 +5,27 @@ import { useEffect, useRef, useState } from "react";
 import { AnilibriaApi } from "@/shared/api/services/AnilibriaService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDebounce } from "use-debounce";
+import { SearchT, TitleItem } from "@/shared/types/TitleT";
 
 export const Navbar = () => {
-  const [data, setData] = useState({
-    list: [
-      {
-        id: 0,
-        names: {
-          en: "",
-          ru: "",
-        },
-        posters: {
-          original: {
-            url: "",
-          },
-        },
-        description: "",
-        status: {
-          string: "",
-        },
-        genres: [],
-      },
-    ],
-    statuses: {
+  const [data, setData] = useState<SearchT>({
+    list: [],
+    status: {
       loading: false,
     },
     filters: {
-      search: "",
+      query: "",
     },
-    pagination: {
-      current_page: 1,
-      items_per_page: 0,
-      pages: 0,
-      total_items: 0,
-    },
-    loadmore: false,
   });
   const [show, setShow] = useState(false);
-  const [debounceQuery] = useDebounce(data.filters.search, 500);
+  const [debounceQuery] = useDebounce(data?.filters.query, 500);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const fetchData = async () => {
     try {
       setData((prev) => ({
         ...prev,
-        statuses: {
+        status: {
           loading: true,
         },
       }));
@@ -59,42 +35,19 @@ export const Navbar = () => {
       if (resp.data) {
         setData((prev) => ({
           ...prev,
-          list: resp.data.list,
-          pagination: resp.data.pagination,
-          statuses: {
+          list: resp.data,
+          status: {
             loading: false,
           },
         }));
       }
     } catch (err) {
       console.error(err);
-    }
-  };
-
-  const loadMore = async () => {
-    try {
       setData((prev) => ({
         ...prev,
-        loadmore: true,
-      }));
-      const params = {
-        search: data.filters.search,
-        page: data.pagination.current_page + 1,
-      };
-      const resp = await AnilibriaApi.searchTitle(params);
-      if (resp.data) {
-        setData((prev) => ({
-          ...prev,
-          list: [...prev.list, ...resp.data.list],
-          pagination: { ...prev.pagination, current_page: resp.data.current_page },
-        }));
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setData((prev) => ({
-        ...prev,
-        loadmore: false,
+        statuses: {
+          loading: false,
+        },
       }));
     }
   };
@@ -104,7 +57,7 @@ export const Navbar = () => {
     try {
       const resp = await AnilibriaApi.getRandom();
       if (resp.data) {
-        navigate(`/anime-details/${resp.data.id}`);
+        navigate(`/anime-details/${resp.data[0].id}`);
       }
     } catch (err) {
       console.error(err);
@@ -185,45 +138,36 @@ export const Navbar = () => {
             id="search"
             placeholder="Поиск тайтлов"
             onChange={(e: any) =>
-              setData((prev) => ({
+              setData((prev: any) => ({
                 ...prev,
                 filters: {
-                  search: e.target.value,
+                  query: e.target.value,
                 },
               }))
             }
           />
         </label>
         <div className={styles.content}>
-          {data.statuses.loading ? (
+          {data?.status?.loading ? (
             <div className={styles.loading}>
               <CircularProgress size={24} />
             </div>
           ) : (
             <div className={styles.items}>
-              {data.list.length > 1 ? (
+              {data?.list?.length >= 1 ? (
                 <>
-                  {data.list.map((e: any) => (
+                  {data?.list.map((e: TitleItem) => (
                     <div key={e.id} className={styles.item} onClick={() => navigate(`/anime-details/${e.id}`)}>
-                      <img src={`https://www.anilibria.tv${e.posters.original?.url}`} alt="" />
+                      <img src={`https://www.anilibria.tv${e.poster.optimized.src}`} alt="" />
                       <div className={styles.item_info}>
-                        <p className={styles.item_status}>{e.status.string}</p>
-                        <h2 className={styles.item_title}>{e.names.ru}</h2>
-                        <p className={styles.item_genres}>{e.genres.join(", ")}</p>
+                        <h2 className={styles.item_title}>{e.name.main}</h2>
+                        <h2 className={styles.item_subtitle}>{e.name.english}</h2>
+                        <p className={styles.item_status}>
+                          {e.type.value} • {e.year}
+                        </p>
                       </div>
                     </div>
                   ))}
-
-                  {data.pagination.current_page < data.pagination.pages &&
-                    (data.loadmore ? (
-                      <div className={styles.loadmore}>
-                        <CircularProgress size={24} />
-                      </div>
-                    ) : (
-                      <div className={styles.show_more} onClick={loadMore}>
-                        + Показать еще
-                      </div>
-                    ))}
                 </>
               ) : (
                 "Нет данных"

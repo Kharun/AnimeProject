@@ -217,6 +217,23 @@
   .MuiSkeleton-root
     background: #f0f0f038 !important
 
+.swiper_prev, .swiper_next
+    color: #fff
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    z-index: 1
+    cursor: pointer
+
+.swiper_prev
+    transform: translateY(-50%) rotate(180deg)
+
+.swiper_next
+    right: 0
+
+:global(.swiper-button-disabled)
+    display: none
+
 
 @media screen and (max-width: 920px)
     .info

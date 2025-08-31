@@ -3,7 +3,9 @@ import { API } from "../instance";
 export const AnilibriaApi = {
   getSchedule: () => API.get("/title/schedule"),
   getUpdates: (page?: any) => API.get(`/title/updates?page=${page}`),
-  getTitle: (id: any) => API.get(`/title?id=${id}`),
-  searchTitle: (params: any) => API.get(`/title/search`, { params }),
-  getRandom: () => API.get("/title/random"),
+  getTitle: (id: any) => API.get(`/anime/releases/${id}/`),
+  searchTitle: (params: any) => API.get(`/app/search/releases`, { params }),
+  getRandom: () => API.get("/anime/releases/random?limit=1"),
+  getCatalog: () => API.get("/anime/catalog/releases/"),
+  getFranchises: (id: any) => API.get(`/anime/franchises/release/${id}/`),
 };
