@@ -88,6 +88,10 @@ export interface TitleItem {
   type: TypeInfo;
   year: number;
   episodes: Episode[];
+  publish_day: {
+    description: string;
+    value: number;
+  };
 }
 
 export interface TitleT {

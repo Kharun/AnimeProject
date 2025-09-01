@@ -86,7 +86,7 @@ export const AnimeDetails = () => {
   return (
     <div className={styles.content}>
       <div className={styles.bg}>
-        <img src="/bg.jpg" alt="" />
+        <img src="/bg.jpg" alt="" loading="lazy" />
       </div>
 
       {data.status?.loading ? (
@@ -139,7 +139,12 @@ export const AnimeDetails = () => {
           <div className={styles.title_top}>{data.data?.name.main}</div>
 
           <div className={styles.info}>
-            <img className={styles.image} src={`https://www.anilibria.tv${data.data?.poster.optimized.src}`} alt="" />
+            <img
+              className={styles.image}
+              src={`https://www.anilibria.tv${data.data?.poster.optimized.src}`}
+              loading="lazy"
+              alt=""
+            />
             <div className={styles.details}>
               <h2 className={styles.details_title}>{data.data?.name.main}</h2>
               <p className={styles.details_title_en}>{data.data?.name.english}</p>
@@ -267,11 +272,15 @@ export const AnimeDetails = () => {
                   e.franchise_releases.map((e) => {
                     return (
                       <SwiperSlide
-                        className={`${styles.others_item} ${id === e.id.toString() ? styles.active : ""}`}
+                        className={`${styles.others_item} ${id === e.release_id.toString() ? styles.active : ""}`}
                         key={e.id}
                         onClick={() => navigate(`/anime-details/${e.release_id}`)}
                       >
-                        <img src={`https://www.anilibria.tv${e.release.poster.optimized.src}` || ""} alt="" />
+                        <img
+                          src={`https://www.anilibria.tv${e.release.poster.optimized.src}` || ""}
+                          loading="lazy"
+                          alt=""
+                        />
                         <p>{e.release.name.main}</p>
                       </SwiperSlide>
                     );

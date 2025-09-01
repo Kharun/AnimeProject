@@ -7,7 +7,7 @@ export const NotFound = () => {
 
   return (
     <div className={styles.content}>
-      <img src="/not-found.png" alt="" />
+      <img src="/not-found.png" alt="" loading="lazy" />
       <p>Кажется, страница не найдена..</p>
       <button className={styles.btn} onClick={() => navigate("/home-page")}>
         <BackIcon />

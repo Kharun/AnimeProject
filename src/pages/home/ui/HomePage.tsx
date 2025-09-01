@@ -49,7 +49,7 @@ export const HomePage = () => {
   return (
     <>
       <div className={styles.banner}>
-        <img className={styles.banner_img} src="https://wallpapercave.com/wp/wp13268605.png" alt="" />
+        <img className={styles.banner_img} src="https://wallpapercave.com/wp/wp13268605.png" alt="" loading="lazy" />
         <div className={styles.banner_bg}></div>
         <div className={styles.banner_text_container}>
           <h2>Провожающая в последний путь Фрирен</h2>

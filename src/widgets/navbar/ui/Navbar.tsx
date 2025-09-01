@@ -92,7 +92,7 @@ export const Navbar = () => {
           <p onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
             Главная
           </p>
-          <p className={styles.nav_link} onClick={() => navigate("schedule-pages")}>
+          <p className={styles.nav_link} onClick={() => navigate("schedule-page")}>
             Расписание
           </p>
           <p className={styles.nav_link} onClick={getRandom}>
@@ -158,7 +158,7 @@ export const Navbar = () => {
                 <>
                   {data?.list.map((e: TitleItem) => (
                     <div key={e.id} className={styles.item} onClick={() => navigate(`/anime-details/${e.id}`)}>
-                      <img src={`https://www.anilibria.tv${e.poster.optimized.src}`} alt="" />
+                      <img src={`https://www.anilibria.tv${e.poster.optimized.src}`} loading="lazy" alt="" />
                       <div className={styles.item_info}>
                         <h2 className={styles.item_title}>{e.name.main}</h2>
                         <h2 className={styles.item_subtitle}>{e.name.english}</h2>
