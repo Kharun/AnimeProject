@@ -89,10 +89,16 @@ export const Navbar = () => {
     <>
       <div className={styles.nav}>
         <div className={styles.nav_links}>
-          <p onClick={() => navigate("/")} className={`${styles.nav_link} ${styles.active}`}>
+          <p
+            onClick={() => navigate("/")}
+            className={`${styles.nav_link} ${location.pathname === "/home-page" ? styles.active : ""}`}
+          >
             Главная
           </p>
-          <p className={styles.nav_link} onClick={() => navigate("schedule-page")}>
+          <p
+            className={`${styles.nav_link} ${location.pathname === "/schedule-page" ? styles.active : ""}`}
+            onClick={() => navigate("schedule-page")}
+          >
             Расписание
           </p>
           <p className={styles.nav_link} onClick={getRandom}>
@@ -115,7 +121,7 @@ export const Navbar = () => {
 
       <div className={styles.bottom_bar}>
         <div
-          className={`${styles.bottom_bar_item} ${location.pathname === "/" || "/home-page" ? styles.active : ""}`}
+          className={`${styles.bottom_bar_item} ${location.pathname === "/home-page" ? styles.active : ""}`}
           onClick={() => navigate("/")}
         >
           <HomeIcon />
@@ -123,7 +129,10 @@ export const Navbar = () => {
         <div className={styles.bottom_bar_item} onClick={getRandom}>
           <RandomIcon />
         </div>
-        <div className={styles.bottom_bar_item} onClick={() => navigate("schedule-page")}>
+        <div
+          className={`${styles.bottom_bar_item} ${location.pathname === "/schedule-page" ? styles.active : ""}`}
+          onClick={() => navigate("schedule-page")}
+        >
           <CalendarIcon />
         </div>
       </div>
