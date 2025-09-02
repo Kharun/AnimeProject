@@ -69,6 +69,22 @@ export const Schedule = () => {
     return value === today;
   };
 
+  function getReleaseText(count: number) {
+    const absCount = Math.abs(count) % 100;
+    const lastDigit = absCount % 10;
+
+    if (absCount > 10 && absCount < 20) {
+      return `${count} релизов`;
+    }
+    if (lastDigit > 1 && lastDigit < 5) {
+      return `${count} релиза`;
+    }
+    if (lastDigit === 1) {
+      return `${count} релиз`;
+    }
+    return `${count} релизов`;
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -130,7 +146,7 @@ export const Schedule = () => {
 
         {!data.status?.laoding && data.list.length > 0 ? (
           <div className={styles.wrapper}>
-            <motion.div layout>
+            <motion.div layout={"position"} className={styles.motion_div_content}>
               <AnimatePresence>
                 {titleList.map(
                   (item) =>
@@ -144,7 +160,7 @@ export const Schedule = () => {
                         transition={{ duration: 0.3 }}
                       >
                         <h2 className={styles.item_title}>{item.title}</h2>
-                        <p className={styles.item_count}>{item.list.length} релизов</p>
+                        <p className={styles.item_count}>{getReleaseText(item.list.length)}</p>
                         <div className={styles.list}>
                           {item.list.map((title: ScheduleItem) => (
                             <Card
