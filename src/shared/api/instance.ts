@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "https://anilibria.top/api/v1",
+  baseURL: "https://aniliberty.top/api/v1",
 });
